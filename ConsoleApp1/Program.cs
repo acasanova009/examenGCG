@@ -82,6 +82,7 @@ while (!salir)
 int Estatico()
 {
     int memoriaRestante = 2048;
+
     bool salir = false;
     var nuevoProceso = 50;
     List<int> listaParticiones = new List<int>();
