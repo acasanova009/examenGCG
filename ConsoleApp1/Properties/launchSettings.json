@@ -3,7 +3,7 @@
     "ConsoleApp1": {
       "commandName": "Project"
     },
-    "WSL": {
+    "WSL": { 
       "commandName": "WSL2",
       "distributionName": ""
     }
