@@ -84,8 +84,9 @@ int Estatico()
     int memoriaRestante = 2048;
 
     bool salir = false;
-    var nuevoProceso = 50;
+    var nuevaParticion = 50;
     List<int> listaParticiones = new List<int>();
+    List<int> listaProcesos = new List<int>();
 
 
     while (!salir)
@@ -121,30 +122,30 @@ int Estatico()
 
 
             for (int i = 0; i < totalParticiones; i++) {
-                if ((memoriaRestante - (totalParticiones - i -1) * nuevoProceso) <= 50)
+                if ((memoriaRestante - (totalParticiones - i -1) * nuevaParticion) <= 50)
                 {
                     for (; i < totalParticiones; i++)
                     {
-                        memoriaRestante = memoriaRestante - nuevoProceso;
+                        memoriaRestante = memoriaRestante - nuevaParticion;
                         listaParticiones.Add(50);
                     }
                     break;
                 }
 
                 Console.WriteLine("Elige tamaño para la siguiente particion " + i);
-                Console.WriteLine("Max: " + (memoriaRestante - (totalParticiones - i - 1) * nuevoProceso) + "kb");
+                Console.WriteLine("Max: " + (memoriaRestante - (totalParticiones - i - 1) * nuevaParticion) + "kb");
                 Console.WriteLine("Min: 50kb");
 
 
 
                 int tamanioParticionNueva = Convert.ToInt32(Console.ReadLine());
-                while (tamanioParticionNueva <nuevoProceso  || tamanioParticionNueva > (memoriaRestante - (totalParticiones-i-1) * nuevoProceso))
+                while (tamanioParticionNueva <nuevaParticion  || tamanioParticionNueva > (memoriaRestante - (totalParticiones-i-1) * nuevaParticion))
                 {
 
                     Console.WriteLine("*Error tamaño fuera de rango posible*");
                     Console.WriteLine("");
                     Console.WriteLine("Elige tamaño para la siguiente particion " + i);
-                    Console.WriteLine("Max: " + (memoriaRestante - (totalParticiones - i - 1) * nuevoProceso) + "kb");
+                    Console.WriteLine("Max: " + (memoriaRestante - (totalParticiones - i - 1) * nuevaParticion) + "kb");
                     Console.WriteLine("Min: 50kb");
 
                     tamanioParticionNueva = Convert.ToInt32(Console.ReadLine());
@@ -155,19 +156,87 @@ int Estatico()
 
             }
             Console.Clear();
-            Console.WriteLine("------------------Estado del sistema Operativo---------------------");
+            Console.WriteLine("------------------Estado de PARTICIONES---------------------");
             Console.WriteLine("");
             Console.WriteLine("Particiones totales son: " + totalParticiones);
-            int j = 1;
+            int j = 0;
+
+
+            
+
+            int nuevoProcesso;
+
+
             foreach (var particion in listaParticiones)
             {
-                Console.WriteLine("Particion: "+j + " Proceso: "+particion);
+                Console.WriteLine("Particion: "+j + " "+particion);
+
+               
+
                 j++;
             }
             if (memoriaRestante>0)
             {
-                Console.WriteLine("Particion Vacia: " + j + " Proceso: " + memoriaRestante);
+                Console.WriteLine("Particion Vacia:   " + memoriaRestante);
                 
+            }
+
+            Console.WriteLine(" ");
+            Console.WriteLine(" ");
+
+            Console.WriteLine("Agregar Procesos a las PARTICIONES: ");
+            Console.WriteLine("-------------------------- ");
+            j = 0;
+
+            foreach (var particion in listaParticiones)
+            {
+                Console.WriteLine("Particion: " + j + " -> Maximo de memoria:" + particion);
+
+                Console.WriteLine("Nuevo Proceso:");
+                nuevoProcesso = Convert.ToInt32(Console.ReadLine());
+
+                while (nuevoProcesso < 0 || nuevoProcesso > particion)
+                {
+
+                    Console.WriteLine("*Error tamaño de processo*, ");
+                    Console.WriteLine("Tiene que ser de 0 a " + particion);
+
+                    nuevoProcesso = Convert.ToInt32(Console.ReadLine());
+
+                }
+
+                listaProcesos.Add(nuevoProcesso);
+
+                j++;
+            }
+
+
+            
+
+
+
+
+
+            Console.WriteLine("------------------Estado del sistema Operativo con Procesos---------------------");
+            Console.WriteLine("");
+            Console.WriteLine("Particiones totales son: " + totalParticiones);
+            int k = 0;
+            var enumeratorProcesos = listaProcesos.GetEnumerator();
+            
+           
+
+            foreach (var particion in listaParticiones)
+            {
+                enumeratorProcesos.MoveNext();
+                Console.WriteLine("Particion: " + k + " [" + particion+"]   Proceso:  " + enumeratorProcesos.Current);
+                
+                k++;
+
+            }
+            if (memoriaRestante > 0)
+            {
+                Console.WriteLine("Particion Vacia:   " + memoriaRestante);
+
             }
             Console.WriteLine();
             Console.WriteLine("");
@@ -287,6 +356,7 @@ int Paginacion()
     bool salir = false;
 
     List<int> listaParticiones = new List<int>();
+    List<int> listaProcesos = new List<int>();
 
 
     while (!salir)
@@ -328,7 +398,7 @@ int Paginacion()
                 }
                 else
                 {
-                    Console.WriteLine("Se excedio necesidad de memoria, se incia el SO con los procesos validos");
+                    Console.WriteLine("Se excedio necesidad de memoria, se incia el SO con las particiones validos");
                     seguirIntentaoAgregarNuevasParticiones = false;
                 }
 
@@ -340,17 +410,24 @@ int Paginacion()
             Console.WriteLine("------------------Estado del sistema Operativo---------------------");
             Console.WriteLine("");
             Console.WriteLine("Particiones totales son: " + listaParticiones.Count);
-            int j = 1;
+            int j = 0;
             foreach (var particion in listaParticiones)
             {
-                Console.WriteLine("Particion: " + j + " Proceso: " + particion);
+                Console.WriteLine("Particion: " + j + "  " + particion);
                 j++;
             }
             if (memoriaRestante > 0)
             {
-                Console.WriteLine("Particion Vacia: " + j + " Proceso: " + memoriaRestante);
+                Console.WriteLine("Particion Vacia: " + " " + memoriaRestante);
 
             }
+
+            for (int k=0; k <= j; k++)
+            {
+                
+            }
+
+
             Console.WriteLine();
             Console.WriteLine("");
             Console.WriteLine("");
